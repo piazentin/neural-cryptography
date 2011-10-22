@@ -1,26 +1,27 @@
 # -*- coding: utf-8 -*-
 import random
 import math
-from treinamento import *
-from unidade import Unidade
+from lrule import *
+from unit import Unit
 
 class TreeParityMachine(object):
 
-    def __init__(self, units, inputs, lrule=Hebbian, L=6):
-        self.unidades = []
-        self.formato = (units, inputs)
-        self.saida = None
-        for unit in range(units):
-            self.unidades.append(Unidade(inputs, L, lrule))
+    def __init__(self, K, N, lrule=Hebbian, L=6):
+        self.units = []
+        self.K = K
+        self.N = N
+        self.y = None
+        for unit in range(K):
+            self.units.append(Unit(N, L, lrule))
 
-    def __call__(self, entradas):
-        self.saida = 1
-        entradas = self._quebrar(entradas, self.formato[1])
-        for unidade, entradasn in zip(self.unidades, entradas):
-            self.saida = self.saida * unidade(entradasn)
-        return self.saida
+    def __call__(self, x):
+        self.y = 1
+        x = self._chunks(x, self.N)
+        for unit, xi in zip(self.units, x):
+            self.y = self.y * unit(xi)
+        return self.y
     
-    def _quebrar(self, lista, tamanho):
+    def _chunks(self, lista, tamanho):
         offset = 0
         chunks = []
         for i in range(len(lista)/tamanho):
@@ -31,25 +32,25 @@ class TreeParityMachine(object):
             chunks.append(chunk)
         return chunks
 
-    def ativacao(self, saida):
-        return (self.saida == saida)
+    def ativacao(self, y):
+        return (self.y == y)
 
-    def treinar(self, entradas):
-        entradas = self._quebrar(entradas, self.formato[1])
-        for unidade, entrada in zip(self.unidades, entradas):
-            unidade.treinar(entrada, self.saida)
+    def train(self, x):
+        x = self._chunks(x, self.N)
+        for unit, xi in zip(self.units, x):
+            unit.treinar(xi, self.y)
 
-    def pesos(self):
+    def weights(self):
         w = []
-        for unidade in self.unidades:
-            for wi in unidade.w:
+        for unit in self.units:
+            for wi in unit.w:
                 w.append(wi)
         return w
 
-    def saidas(self):
+    def outputs(self):
         w = []
-        for unidade in self.unidades:
-                w.append(unidade.o)
+        for unit in self.units:
+                w.append(unit.o)
         return w
 
 
@@ -74,4 +75,4 @@ class Cripto(object):
         return self.saida
 
     def treinar(self):
-        self.tpm.treinar(self.entradas)
+        self.tpm.train(self.entradas)

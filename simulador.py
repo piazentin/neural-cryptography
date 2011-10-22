@@ -12,7 +12,7 @@ def calc_distance(xi, yi):
 	for x, y in zip(xi, yi):
 		d = d + abs(x - y)
 	return d
-for e in [3,4,5,8,16,32,64,128,256,512,1024]:
+for e in [3,4,5]:
 	print "-------------------------------------------"
 	print e
 	print "-------------------------------------------"
@@ -38,6 +38,6 @@ for e in [3,4,5,8,16,32,64,128,256,512,1024]:
 			else:
 				sinc = 0
 
-			if A.tpm.pesos() == B.tpm.pesos():
+			if A.tpm.weights() == B.tpm.weights():
 				print t, "\t", (time.time() - start)
 				break;
