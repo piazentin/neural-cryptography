@@ -7,7 +7,7 @@ from unit import Unit
 
 class TreeParityMachine(object):
 
-    def __init__(self, K, N, lrule=Hebbian, L=6):
+    def __init__(self, K, N, L=3, lrule=Hebbian):
         self.units = []
         self.K = K
         self.N = N
@@ -57,17 +57,3 @@ class TreeParityMachine(object):
     def generate_inputs(self):
         self.x = [[-1,1][random.randint(0,1)] for whatever in range(self.K * self.N)]
         return self.x
-
-if __name__ == "__main__":
-    Cripto();
-
-class Cripto(object):
-    def criar_tpm(self, n, e, L=3):
-        self.n = n
-        self.e = e
-        self.tpm = TreeParityMachine(n,e, L=L)
-
-    def __init__(self, n, e, L=3):
-        self.criar_tpm(n, e, L)
-
-
