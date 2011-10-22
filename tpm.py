@@ -4,6 +4,7 @@ import math
 from lrule import *
 from unit import Unit
 
+
 class TreeParityMachine(object):
 
     def __init__(self, K, N, lrule=Hebbian, L=6):
@@ -21,24 +22,24 @@ class TreeParityMachine(object):
             self.y = self.y * unit(xi)
         return self.y
     
-    def _chunks(self, lista, tamanho):
+    def _chunks(self, l, chunk_size):
         offset = 0
         chunks = []
-        for i in range(len(lista)/tamanho):
+        for i in range(len(l)/chunk_size):
             chunk = []
-            for j in range(tamanho):
-                chunk.append(lista[offset + j])
+            for j in range(chunk_size):
+                chunk.append(l[offset + j])
             offset = offset + j + 1
             chunks.append(chunk)
         return chunks
 
-    def ativacao(self, y):
+    def activation(self, y):
         return (self.y == y)
 
     def train(self, x):
         x = self._chunks(x, self.N)
         for unit, xi in zip(self.units, x):
-            unit.treinar(xi, self.y)
+            unit.train(xi, self.y)
 
     def weights(self):
         w = []
@@ -53,6 +54,9 @@ class TreeParityMachine(object):
                 w.append(unit.o)
         return w
 
+    def generate_inputs(self):
+        self.x = [[-1,1][random.randint(0,1)] for whatever in range(self.K * self.N)]
+        return self.x
 
 if __name__ == "__main__":
     Cripto();
@@ -63,16 +67,7 @@ class Cripto(object):
         self.e = e
         self.tpm = TreeParityMachine(n,e, L=L)
 
-    def gerar_entradas(self):
-        self.entradas = [[-1,1][random.randint(0,1)] for whatever in range(self.n*self.e)]
-
     def __init__(self, n, e, L=3):
         self.criar_tpm(n, e, L)
 
-    def calcular_saida(self, entradas):
-        self.entradas = entradas
-        self.saida = self.tpm(entradas)
-        return self.saida
 
-    def treinar(self):
-        self.tpm.train(self.entradas)

@@ -26,14 +26,14 @@ for e in [3,4,5]:
 		sinc = 0
 		start = time.time()
 		while sinc < 100:
-			A.gerar_entradas()
+			A.tpm.generate_inputs()
 			t = t + 1
-			A.calcular_saida(A.entradas)
-			B.calcular_saida(A.entradas)
+			A.tpm(A.tpm.x)
+			B.tpm(A.tpm.x)
 
-			if A.saida == B.saida:
-				A.treinar()
-				B.treinar()
+			if A.tpm.activation(B.saida):
+				A.tpm.train(A.tpm.x)
+				B.tpm.train(A.tpm.x)
 				contador = contador + 1
 			else:
 				sinc = 0

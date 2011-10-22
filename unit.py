@@ -23,7 +23,7 @@ class Unit(object):
         else:
             return 1
 
-    def treinar(self, x, y):
+    def train(self, x, y):
         for i in range(len(self.w)):  
             wi = self.lrule(self.w[i], x[i], y, self.o)
             self.w[i] = self.adjust(wi)
