@@ -10,7 +10,7 @@ VALOR = 1
 ENTRADA = 0
 SAIDA = 1
 ACK = 2
-LIMITE_SINCRONIZACAO = 10
+LIMITE_SINCRONIZACAO = 5
 
 class CriptografiaNeural(Protocol):
 
