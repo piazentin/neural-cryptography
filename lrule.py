@@ -12,15 +12,18 @@ class LearningRule:
 
 
 class Hebbian(LearningRule):
+
     def __call__(self, w, x, y, o):
         return w + (x * y) * self.step(y, o)
 
 
 class AntiHebbian(LearningRule):
+
     def __call__(self, w, x, y, o):
         return w - (x * y) * self.step(y, o)
 
 
 class RandomWalk(LearningRule):
+    
     def __call__(self, w, x, y, o):
         return w + x * self.step(y, o)

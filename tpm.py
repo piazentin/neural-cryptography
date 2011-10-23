@@ -7,7 +7,7 @@ from unit import Unit
 
 class TreeParityMachine(object):
 
-    def __init__(self, K, N, L=3, lrule=Hebbian):
+    def __init__(self, K=3, N=4, L=3, lrule=Hebbian):
         self.units = []
         self.K = K
         self.N = N
