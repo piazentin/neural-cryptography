@@ -6,23 +6,33 @@ from protocol import NeuralCryptography
 from tpm import TreeParityMachine
 import json
 
-class CriptografiaNeural(NeuralCryptography):
+class NeuralCryptographyClient(NeuralCryptography):
 
     def __init__(self):
-       NeuralCryptography.__init__(self)
+        NeuralCryptography.__init__(self)
+        self.call(target=chatLoop, args=(self,))
+        self.receive(target=printer)
 
     def dataReceived(self, data):
-        data = json.loads(data)
-        print data 
         if not self.synced():
             self.syncronizer(data)
+        else:
+            self.received(data)
 
     def connectionMade(self):
         self.receive_ack()
 
+
+def chatLoop(chat):
+    while True:
+        chat.send_message(str(raw_input()))
+
+def printer(message):
+    print message
+
 # Inicializa classe
 factory = Factory()
-factory.protocol = CriptografiaNeural
+factory.protocol = NeuralCryptographyClient
 endpoint = TCP4ClientEndpoint(reactor, "localhost",1984)
 endpoint.connect(factory)
 reactor.run()

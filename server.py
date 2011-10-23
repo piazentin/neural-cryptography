@@ -9,13 +9,22 @@ import json
 class NeuralCryptographyServer(NeuralCryptography):
 
     def __init__(self):
-       NeuralCryptography.__init__(self)
+        NeuralCryptography.__init__(self)
+        self.call(target=chatLoop, args=(self,))
+        self.receive(target=printer)
 
     def dataReceived(self, data):
-        data = json.loads(data)
-        print data 
         if not self.synced():
             self.syncronizer(data)
+        else:
+            self.received(data)
+
+def chatLoop(chat):
+    while True:
+        chat.send_message(str(raw_input("Digite sua mensagem: ")))
+
+def printer(message):
+    print "Mensagem recebida: ", message
 
 # Inicializa classe
 factory = Factory()
