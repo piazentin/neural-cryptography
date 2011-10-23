@@ -17,6 +17,7 @@ class TreeParityMachine(object):
 
     def __call__(self, x):
         self.y = 1
+        self.x = x
         x = self._chunks(x, self.N)
         for unit, xi in zip(self.units, x):
             self.y = self.y * unit(xi)
@@ -36,7 +37,8 @@ class TreeParityMachine(object):
     def activation(self, y):
         return (self.y == y)
 
-    def train(self, x):
+    def train(self, x=None):
+        x = x or self.x
         x = self._chunks(x, self.N)
         for unit, xi in zip(self.units, x):
             unit.train(xi, self.y)

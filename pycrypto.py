@@ -15,7 +15,7 @@ key = sha.digest()
 mode = AES.MODE_CBC
 encryptor = AES.new(key, mode)
 
-text = pad('Padre Gnomo Dalmazo Novaki'.encode('utf-8'))
+text = pad('SYNCED'.encode('utf-8'))
 ciphertext = encryptor.encrypt(text)
 
 decryptor = AES.new(key, mode)
