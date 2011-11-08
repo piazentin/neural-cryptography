@@ -20,7 +20,7 @@ class Hebbian(LearningRule):
 class AntiHebbian(LearningRule):
 
     def __call__(self, w, x, y, o):
-        return w - (x * y) * self.step(y, o)
+        return w - (x * o) * self.step(y, o)
 
 
 class RandomWalk(LearningRule):
